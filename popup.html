@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tab Resource Saver</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="app-container">
+    <header class="header">
+      <div class="logo-title">
+        <span class="logo-icon">⚡</span>
+        <h1>Tab Resource Saver</h1>
+      </div>
+      <button id="unloadAllBtn" class="btn btn-primary" title="Unload all idle tabs now">
+        💤 Unload All Inactive
+      </button>
+    </header>
+
+    <!-- Metrics overview -->
+    <section class="stats-card">
+      <div class="stat-item">
+        <span class="stat-val" id="totalTabsCount">0</span>
+        <span class="stat-lbl">Total Tabs</span>
+      </div>
+      <div class="stat-item running">
+        <span class="stat-val" id="runningTabsCount">0</span>
+        <span class="stat-lbl">🟢 Running (RAM)</span>
+      </div>
+      <div class="stat-item sleeping">
+        <span class="stat-val" id="sleepingTabsCount">0</span>
+        <span class="stat-lbl">💤 Unloaded</span>
+      </div>
+      <div class="stat-item saved">
+        <span class="stat-val" id="estRamSaved">~0 MB</span>
+        <span class="stat-lbl">Est. RAM Saved</span>
+      </div>
+    </section>
+
+    <!-- Toolbar: Inactivity timer & Filter -->
+    <section class="toolbar">
+      <div class="timer-control">
+        <label for="idleSelect">Auto-Unload Inactive:</label>
+        <select id="idleSelect">
+          <option value="0">Disabled</option>
+          <option value="5">After 5 mins</option>
+          <option value="15" selected>After 15 mins</option>
+          <option value="30">After 30 mins</option>
+          <option value="60">After 1 hour</option>
+          <option value="120">After 2 hours</option>
+        </select>
+      </div>
+      <div class="search-box">
+        <input type="text" id="tabSearch" placeholder="Filter tabs..." />
+      </div>
+    </section>
+
+    <!-- Tab List -->
+    <main class="tabs-list-wrapper">
+      <div id="tabsList" class="tabs-list"></div>
+      <div id="emptyNotice" class="empty-notice hidden">No matching tabs found</div>
+    </main>
+
+    <footer class="footer">
+      <span>💡 Discarded tabs stay open on your bar and wake instantly when clicked.</span>
+    </footer>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
