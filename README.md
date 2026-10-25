@@ -8,7 +8,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](CONTRIBUTING.md)
 [![Zero Telemetry](https://img.shields.io/badge/Privacy-Zero%20Telemetry-success?style=for-the-badge&logo=shield)](PRIVACY.md)
-[![Stars](https://img.shields.io/github/stars/yourusername/tab-resource-saver?style=for-the-badge&color=ffd700)](https://github.com/yourusername/tab-resource-saver/stargazers)
+[![Stars](https://img.shields.io/github/stars/masterpiecedotcom/firefox-tab-resource-saver?style=for-the-badge&color=ffd700)](https://github.com/masterpiecedotcom/firefox-tab-resource-saver/stargazers)
 
 <br/>
 
