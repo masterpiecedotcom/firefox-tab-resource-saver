@@ -122,8 +122,8 @@ Third-party tab group managers hide tabs using the WebExtensions `browser.tabs.h
 
 1. Clone or download this repository:
    ```bash
-   git clone https://github.com/yourusername/tab-resource-saver.git
-   cd tab-resource-saver
+   git clone https://github.com/masterpiecedotcom/firefox-tab-resource-saver.git
+   cd firefox-tab-resource-saver
    ```
 2. Open Firefox and navigate to `about:debugging#/runtime/this-firefox`.
 3. Click **Load Temporary Add-on...**
