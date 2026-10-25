@@ -7,51 +7,119 @@
 </head>
 <body>
   <div class="app-container">
+    <!-- Header -->
     <header class="header">
       <div class="logo-title">
         <span class="logo-icon">⚡</span>
         <h1>Tab Resource Saver</h1>
       </div>
-      <button id="unloadAllBtn" class="btn btn-primary" title="Unload all idle tabs now">
-        💤 Unload All Inactive
-      </button>
+      <div class="header-actions">
+        <button id="toggleSettingsBtn" class="btn btn-secondary" title="Settings & Whitelist">⚙️ Rules</button>
+        <button id="unloadAllBtn" class="btn btn-primary" title="Unload all non-whitelisted idle tabs">💤 Unload Inactive</button>
+      </div>
     </header>
 
-    <!-- Metrics overview -->
+    <!-- Stats Overview -->
     <section class="stats-card">
-      <div class="stat-item">
+      <div class="stat-item" id="statTotalBox" title="Total tabs (visible + hidden)">
         <span class="stat-val" id="totalTabsCount">0</span>
-        <span class="stat-lbl">Total Tabs</span>
+        <span class="stat-lbl" id="totalTabsLbl">Total (0 visible)</span>
       </div>
-      <div class="stat-item running">
+      <div class="stat-item running" title="Tabs actively loaded in RAM">
         <span class="stat-val" id="runningTabsCount">0</span>
-        <span class="stat-lbl">🟢 Running (RAM)</span>
+        <span class="stat-lbl">🔴 Running (RAM)</span>
       </div>
-      <div class="stat-item sleeping">
+      <div class="stat-item sleeping" title="Unloaded tabs (free of CPU/RAM)">
         <span class="stat-val" id="sleepingTabsCount">0</span>
-        <span class="stat-lbl">💤 Unloaded</span>
+        <span class="stat-lbl">💤 Sleeping</span>
       </div>
-      <div class="stat-item saved">
+      <div class="stat-item saved" title="Conservative estimated RAM saved">
         <span class="stat-val" id="estRamSaved">~0 MB</span>
-        <span class="stat-lbl">Est. RAM Saved</span>
+        <span class="stat-lbl">RAM Reclaimed</span>
       </div>
     </section>
 
-    <!-- Toolbar: Inactivity timer & Filter -->
-    <section class="toolbar">
-      <div class="timer-control">
-        <label for="idleSelect">Auto-Unload Inactive:</label>
-        <select id="idleSelect">
-          <option value="0">Disabled</option>
-          <option value="5">After 5 mins</option>
-          <option value="15" selected>After 15 mins</option>
-          <option value="30">After 30 mins</option>
-          <option value="60">After 1 hour</option>
-          <option value="120">After 2 hours</option>
-        </select>
+    <!-- Settings / Rules Drawer (Collapsible) -->
+    <section id="settingsPanel" class="settings-panel hidden">
+      <div class="panel-header">
+        <h3>Configuration & Whitelist</h3>
+        <button id="closeSettingsBtn" class="btn-close-text">✕</button>
       </div>
+
+      <!-- Auto Unload Toggle & Timer -->
+      <div class="setting-row">
+        <div class="setting-info">
+          <strong>Auto-Unload Inactive Tabs</strong>
+          <p>Automatically sleep tabs idle longer than specified duration (up to 7 days).</p>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="autoUnloadToggle" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-row timer-row" id="timerConfigRow">
+        <label>Idle duration before sleep:</label>
+        <div class="timer-inputs">
+          <input type="number" id="idleNumber" min="1" max="10000" value="15">
+          <select id="idleUnit">
+            <option value="minutes">Minutes</option>
+            <option value="hours">Hours</option>
+            <option value="days">Days (up to 7)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Red Circle Indicator Toggle -->
+      <div class="setting-row">
+        <div class="setting-info">
+          <strong>Show 🔴 Indicator on Running Tabs</strong>
+          <p>Highlight tabs actively consuming memory with a red indicator.</p>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="redIndicatorToggle" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <!-- Tab Title Tagging Toggle -->
+      <div class="setting-row">
+        <div class="setting-info">
+          <strong>Prefix Tab Bar Title with 🔴</strong>
+          <p>Puts 🔴 directly on the browser tab bar for active tabs.</p>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="titleTagToggle">
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <!-- Domain Whitelist -->
+      <div class="setting-row col">
+        <div class="setting-info">
+          <strong>Never-Sleep Domain Whitelist</strong>
+          <p>Enter domains to permanently protect (e.g., youtube.com, mail.google.com):</p>
+        </div>
+        <div class="whitelist-input-group">
+          <input type="text" id="whitelistInput" placeholder="domain.com (e.g. reddit.com)">
+          <button id="addWhitelistBtn" class="btn btn-action">Add</button>
+        </div>
+        <div id="whitelistTags" class="whitelist-tags"></div>
+      </div>
+    </section>
+
+    <!-- Toolbar: Search & Tab count info -->
+    <section class="toolbar">
       <div class="search-box">
-        <input type="text" id="tabSearch" placeholder="Filter tabs..." />
+        <input type="text" id="tabSearch" placeholder="🔍 Search open tabs by title or domain...">
+      </div>
+      <div class="filter-toggles">
+        <select id="tabFilterSelect">
+          <option value="all">All Tabs</option>
+          <option value="running">Only Running</option>
+          <option value="sleeping">Only Sleeping</option>
+          <option value="protected">Only Protected</option>
+        </select>
       </div>
     </section>
 
@@ -61,8 +129,9 @@
       <div id="emptyNotice" class="empty-notice hidden">No matching tabs found</div>
     </main>
 
+    <!-- Footer -->
     <footer class="footer">
-      <span>💡 Discarded tabs stay open on your bar and wake instantly when clicked.</span>
+      <span id="footerInfo">💡 Click tab to focus. Sleeping tabs keep your spot without eating RAM.</span>
     </footer>
   </div>
   <script src="popup.js"></script>

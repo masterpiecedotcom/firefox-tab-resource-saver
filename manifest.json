@@ -1,12 +1,16 @@
 {
   "manifest_version": 3,
   "name": "Tab Resource Saver & Sleep Manager",
-  "version": "1.0.0",
-  "description": "Displays active tabs, memory status, idle timers, and unloads tabs to reclaim CPU and RAM.",
+  "version": "2.0.0",
+  "description": "Monitors tabs, prevents memory hogging, allows auto-unloading up to 7 days, domain/tab whitelisting, and running tab indicators.",
   "permissions": [
     "tabs",
     "storage",
-    "alarms"
+    "alarms",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
   ],
   "action": {
     "default_popup": "popup.html",
@@ -23,7 +27,7 @@
   },
   "browser_specific_settings": {
     "gecko": {
-      "id": "tab-resource-saver@firefox.addon",
+      "id": "tab-resource-saver-v2@firefox.addon",
       "strict_min_version": "109.0"
     }
   }
